@@ -1,0 +1,15 @@
+services:
+  be-joint:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    container_name: be-joint
+    ports:
+      - "8080:8080"
+  fe-joint:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    container_name: fe-joint   
+    ports:
+      - "3000:3000"

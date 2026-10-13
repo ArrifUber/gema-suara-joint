@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #0b141c;
+  --color-surface: #111d28;
+  --color-panel: #17252f;
+  --color-line: #263646;
+  --color-gold: #f2b63d;
+  --color-gold-dim: #8a6a22;
+  --color-live: #2fbf71;
+  --color-alert: #e5534b;
+  --color-fg: #f1f5f9;
+  --color-mute: #8a9baa;
+}
+
+html, body { height: 100%; }
+
+/*
+ * SKALA TIPOGRAFI (dipakai konsisten lewat kelas Tailwind di tiap komponen)
+ *   Sapaan (display)        text-4xl font-bold lg:text-5xl
+ *   H1  judul layar         text-2xl font-bold
+ *   H2  judul bagian/dialog text-xl font-semibold
+ *   H3  judul kartu/item    text-lg font-semibold
+ *   Isi / tombol / input    text-base
+ *   Keterangan (meta)       text-sm text-mute
+ *   Badge & label kapital   text-xs  (hanya LIVE, jenis catatan, label "CAPTION LANGSUNG")
+ *   Caption                 .caption-text (diatur murid di Profil)
+ */
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ukuran caption diatur pengguna lewat variabel ini (lihat halaman Profil) */
+:root { --caption-size: 1.5rem; }
+.caption-text { font-size: var(--caption-size); line-height: 1.45; }
+@media (min-width: 1024px) { .caption-text { font-size: calc(var(--caption-size) * 1.2); } }
+
+:focus-visible { outline: 3px solid var(--color-gold); outline-offset: 2px; border-radius: 8px; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@keyframes pulse-dot { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+.pulse-dot { animation: pulse-dot 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .pulse-dot { animation: none; } }
+
+/* ---------- Interaksi: cursor pointer + fade saat hover ---------- */
+button:not(:disabled),
+[role="tab"],
+[role="radio"],
+a[href],
+select,
+summary {
+  cursor: pointer;
+  transition: opacity 0.18s ease, background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+button:disabled { cursor: not-allowed; }
+
+/* Hover hanya untuk perangkat yang punya kursor, supaya tidak "menempel" di layar sentuh */
+@media (hover: hover) {
+  button:not(:disabled):hover,
+  [role="tab"]:hover,
+  [role="radio"]:hover,
+  a[href]:hover { opacity: 0.8; }
+}
+
+button:not(:disabled):active,
+a[href]:active { opacity: 0.65; }
+
+@media (prefers-reduced-motion: reduce) {
+  button, [role="tab"], [role="radio"], a[href], select, summary { transition: none; }
+}
